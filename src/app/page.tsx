@@ -1,4 +1,5 @@
 import { ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
+import Link from "next/link";
 import { SiteHeader } from "@/components/layout/site-header";
 
 const previewProducts = [
@@ -24,12 +25,12 @@ export default function HomePage() {
               chegada dos produtos oficiais.
             </p>
             <div className="hero-actions">
-              <a className="primary-action" href="/catalogo">
+              <Link className="primary-action" href="/catalogo">
                 Explorar demonstração <ArrowRight aria-hidden="true" />
-              </a>
-              <a className="text-action" href="/sobre">
+              </Link>
+              <Link className="text-action" href="/sobre">
                 Conhecer o projeto
-              </a>
+              </Link>
             </div>
             <p className="demo-assurance">
               <ShieldCheck aria-hidden="true" /> Nenhuma cobrança real é

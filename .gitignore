@@ -1,0 +1,46 @@
+# dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# testing
+coverage/
+playwright-report/
+test-results/
+
+# environment and secrets
+.env
+.env.*
+!.env.example
+
+# local tooling
+.vercel/
+.turbo/
+*.tsbuildinfo
+
+# logs and temporary files
+*.log
+*.bak
+*.old
+*.orig
+*.swp
+.DS_Store
+Thumbs.db
+
+# local databases and dumps
+*.db
+*.sqlite
+*.dump
+*.sql.gz
+
+# private keys and certificates
+*.pem
+*.key
+*.p12
+*.pfx
+
+# IDE
+.idea/
+.vscode/

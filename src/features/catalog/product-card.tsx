@@ -24,7 +24,8 @@ export function ProductCard({
         <Image
           alt={product.imageAlt}
           fill
-          priority={priority}
+          fetchPriority={priority ? "high" : "auto"}
+          loading={priority ? "eager" : "lazy"}
           sizes="(max-width: 42rem) 100vw, (max-width: 64rem) 50vw, 25vw"
           src={product.image}
         />

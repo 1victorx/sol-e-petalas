@@ -3,10 +3,10 @@ import type { ReactNode } from "react";
 import { CartProvider } from "@/features/cart/cart-provider";
 import "./globals.css";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-  ),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "SOL & PETALAS",
     template: "%s | SOL & PETALAS",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
       "Experiência demonstrativa de maquiagens e acessórios femininos.",
     images: [
       {
-        url: "/og.png",
+        url: `${siteUrl.replace(/\/$/, "")}/og.png`,
         width: 1731,
         height: 909,
         alt: "Composição demonstrativa SOL & PETALAS",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    images: ["/og.png"],
+    images: [`${siteUrl.replace(/\/$/, "")}/og.png`],
   },
   robots: {
     index: false,
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="pt-BR">
+    <html data-scroll-behavior="smooth" lang="pt-BR">
       <body>
         <a className="skip-link" href="#conteudo">
           Pular para o conteúdo

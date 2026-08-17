@@ -61,7 +61,11 @@ export default function HomePage() {
           </h2>
           <p>Informações comerciais identificadas com clareza</p>
           <p>Navegação acessível por toque e teclado</p>
-          <p>Valores e estoque validados no servidor</p>
+          <p>
+            {process.env.NEXT_PUBLIC_STATIC_DEMO === "true"
+              ? "Valores e estoque validados no navegador desta demonstração"
+              : "Valores e estoque validados no servidor"}
+          </p>
         </section>
       </main>
     </>

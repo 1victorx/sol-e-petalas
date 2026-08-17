@@ -36,11 +36,22 @@ const securityHeaders = [
     : []),
 ];
 
-const nextConfig: NextConfig = {
-  poweredByHeader: false,
-  async headers() {
-    return [{ source: "/(.*)", headers: securityHeaders }];
-  },
-};
+const isGitHubPages = process.env.GITHUB_PAGES === "true";
+
+const nextConfig: NextConfig = isGitHubPages
+  ? {
+      output: "export",
+      basePath: "/sol-e-petalas",
+      assetPrefix: "/sol-e-petalas",
+      trailingSlash: true,
+      images: { unoptimized: true },
+      poweredByHeader: false,
+    }
+  : {
+      poweredByHeader: false,
+      async headers() {
+        return [{ source: "/(.*)", headers: securityHeaders }];
+      },
+    };
 
 export default nextConfig;

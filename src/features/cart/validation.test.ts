@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { cartItemsSchema, quoteCart } from "./validation";
+import { quoteCart } from "./quote";
+import { cartItemsSchema } from "./validation";
 
 describe("cartItemsSchema", () => {
   it("rejeita quantidade negativa", () => {

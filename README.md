@@ -85,4 +85,10 @@ Nenhuma integração futura é ativada pela mera presença dessas variáveis; ad
 
 ## Publicação
 
-O projeto está preparado para Vercel, mas a implantação em produção está proibida nesta fase. Antes de publicar: substituir dados demonstrativos, aprovar políticas, configurar banco/provedores, executar testes de segurança e definir o plano de hospedagem comercial.
+Uma versão estática demonstrativa é publicada no GitHub Pages. Como o GitHub Pages não executa Next.js no servidor, essa versão revalida o carrinho localmente e consulta o ViaCEP diretamente no navegador. Checkout, pedido e pagamento continuam bloqueados.
+
+```bash
+pnpm pages:build
+```
+
+O build normal (`pnpm build`) preserva as rotas de servidor. A hospedagem comercial continua proibida nesta fase. Antes da produção: substituir dados demonstrativos, aprovar políticas, configurar banco/provedores, executar testes de segurança e definir hospedagem compatível com processamento no servidor.

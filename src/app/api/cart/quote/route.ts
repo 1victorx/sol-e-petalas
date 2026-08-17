@@ -1,4 +1,5 @@
-import { cartItemsSchema, quoteCart } from "@/features/cart/validation";
+import { quoteCart } from "@/features/cart/quote";
+import { cartItemsSchema } from "@/features/cart/validation";
 import { getRequestKey, takeRateLimit } from "@/lib/rate-limit";
 
 export async function POST(request: Request) {

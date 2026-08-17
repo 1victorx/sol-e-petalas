@@ -1,5 +1,6 @@
-import "server-only";
 import type { DemoProduct } from "./types";
+
+const assetPrefix = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export const demoProducts: readonly DemoProduct[] = [
   {
@@ -15,7 +16,7 @@ export const demoProducts: readonly DemoProduct[] = [
       "Imagem criada por IA para demonstração.",
     ],
     priceCents: 6990,
-    image: "/products/blush-rose-demo.png",
+    image: `${assetPrefix}/products/blush-rose-demo.png`,
     imageAlt: "Blush compacto rosé demonstrativo sobre fundo marfim",
     maxPerOrder: 3,
     variants: [
@@ -36,7 +37,7 @@ export const demoProducts: readonly DemoProduct[] = [
       "Imagem criada por IA para demonstração.",
     ],
     priceCents: 5490,
-    image: "/products/mascara-solar-demo.png",
+    image: `${assetPrefix}/products/mascara-solar-demo.png`,
     imageAlt: "Máscara para cílios demonstrativa preta com tampa açafrão",
     maxPerOrder: 4,
     variants: [{ id: "preto", name: "Preto", colorHex: "#171717", stock: 12 }],
@@ -54,7 +55,7 @@ export const demoProducts: readonly DemoProduct[] = [
       "Imagem criada por IA para demonstração.",
     ],
     priceCents: 7990,
-    image: "/products/argolas-lume-demo.png",
+    image: `${assetPrefix}/products/argolas-lume-demo.png`,
     imageAlt: "Par de argolas douradas demonstrativas sobre fundo marfim",
     maxPerOrder: 2,
     variants: [
@@ -74,7 +75,7 @@ export const demoProducts: readonly DemoProduct[] = [
       "Imagem criada por IA para demonstração.",
     ],
     priceCents: 8990,
-    image: "/products/necessaire-bosque-demo.png",
+    image: `${assetPrefix}/products/necessaire-bosque-demo.png`,
     imageAlt: "Nécessaire verde-floresta demonstrativa sobre fundo marfim",
     maxPerOrder: 2,
     variants: [

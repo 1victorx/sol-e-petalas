@@ -11,7 +11,6 @@ import { ProductCard } from "@/features/catalog/product-card";
 
 type ProductPageProps = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ variacao?: string }>;
 };
 
 export function generateStaticParams() {
@@ -32,11 +31,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function ProductPage({
-  params,
-  searchParams,
-}: ProductPageProps) {
-  const [{ slug }, query] = await Promise.all([params, searchParams]);
+export default async function ProductPage({ params }: ProductPageProps) {
+  const { slug } = await params;
   const product = getProductBySlug(slug);
   if (!product) notFound();
   const related = demoProducts
@@ -56,7 +52,7 @@ export default async function ProductPage({
           <span aria-hidden="true">/</span>
           <span>{product.name}</span>
         </nav>
-        <ProductPurchase initialVariantId={query.variacao} product={product} />
+        <ProductPurchase product={product} />
         <section aria-labelledby="related-title" className="related-products">
           <div className="section-heading">
             <p className="eyebrow">Continue explorando</p>

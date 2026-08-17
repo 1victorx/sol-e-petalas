@@ -10,6 +10,7 @@ import {
   type ReactNode,
 } from "react";
 import type { CartItemInput, CartLine } from "@/features/catalog/types";
+import { quoteCart } from "./quote";
 
 type QuoteResponse = {
   lines: CartLine[];
@@ -51,6 +52,10 @@ function normalize(items: CartItemInput[]) {
 }
 
 async function requestQuote(items: CartItemInput[]) {
+  if (process.env.NEXT_PUBLIC_STATIC_DEMO === "true") {
+    return quoteCart(items);
+  }
+
   const response = await fetch("/api/cart/quote", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

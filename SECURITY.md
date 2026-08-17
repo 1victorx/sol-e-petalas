@@ -2,6 +2,8 @@
 
 Este repositório é uma demonstração e não deve processar pedidos ou pagamentos reais.
 
+A prévia do GitHub Pages é estática: não oferece as garantias das rotas de servidor e não deve ser tratada como ambiente comercial.
+
 ## Relato de vulnerabilidades
 
 Não publique detalhes exploráveis em uma issue pública. Use o canal privado de segurança do GitHub após sua ativação pelo proprietário do repositório.

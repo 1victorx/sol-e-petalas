@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Check, Copy, Minus, Plus, Share2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -15,20 +15,10 @@ type ShippingOption = {
   estimate: string;
 };
 
-export function ProductPurchase({
-  product,
-  initialVariantId,
-}: {
-  product: DemoProduct;
-  initialVariantId?: string;
-}) {
+export function ProductPurchase({ product }: { product: DemoProduct }) {
   const firstAvailable = product.variants.find((variant) => variant.stock > 0);
-  const initial =
-    product.variants.find(
-      (variant) => variant.id === initialVariantId && variant.stock > 0,
-    ) ?? firstAvailable;
   const [variantId, setVariantId] = useState(
-    initial?.id ?? product.variants[0]?.id ?? "",
+    firstAvailable?.id ?? product.variants[0]?.id ?? "",
   );
   const [quantity, setQuantity] = useState(1);
   const [shareStatus, setShareStatus] = useState("");
@@ -43,6 +33,19 @@ export function ProductPurchase({
   const maxQuantity = selected
     ? Math.min(selected.stock, product.maxPerOrder)
     : 1;
+
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => {
+      const requested = new URL(window.location.href).searchParams.get(
+        "variacao",
+      );
+      const availableVariant = product.variants.find(
+        (variant) => variant.id === requested && variant.stock > 0,
+      );
+      if (availableVariant) setVariantId(availableVariant.id);
+    }, 0);
+    return () => window.clearTimeout(timeoutId);
+  }, [product.variants]);
 
   function selectVariant(id: string) {
     setVariantId(id);
@@ -90,17 +93,53 @@ export function ProductPurchase({
     setShippingLoading(true);
     setShippingStatus("");
     try {
-      const response = await fetch("/api/cep", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cep: digits }),
-      });
-      const data = (await response.json()) as {
+      let data: {
         error?: string;
         address?: { city: string; state: string };
         shipping?: ShippingOption[];
       };
-      if (!response.ok) throw new Error(data.error ?? "Falha na consulta.");
+
+      if (process.env.NEXT_PUBLIC_STATIC_DEMO === "true") {
+        const response = await fetch(
+          `https://viacep.com.br/ws/${digits}/json/`,
+        );
+        const address = (await response.json()) as {
+          erro?: boolean;
+          localidade?: string;
+          uf?: string;
+        };
+        if (!response.ok || address.erro)
+          throw new Error("CEP não encontrado.");
+        data = {
+          address: {
+            city: address.localidade ?? "",
+            state: address.uf ?? "",
+          },
+          shipping: [
+            {
+              id: "demo-economico",
+              label: "Envio econômico — simulação",
+              priceCents: 1890,
+              estimate: "5 a 8 dias úteis (demonstrativo)",
+            },
+            {
+              id: "demo-expresso",
+              label: "Envio expresso — simulação",
+              priceCents: 2990,
+              estimate: "2 a 4 dias úteis (demonstrativo)",
+            },
+          ],
+        };
+      } else {
+        const response = await fetch("/api/cep", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ cep: digits }),
+        });
+        data = (await response.json()) as typeof data;
+        if (!response.ok) throw new Error(data.error ?? "Falha na consulta.");
+      }
+
       setShipping(data.shipping ?? []);
       setShippingStatus(
         `Destino consultado: ${data.address?.city ?? ""} — ${data.address?.state ?? ""}. Valores abaixo são apenas demonstração.`,
@@ -124,8 +163,9 @@ export function ProductPurchase({
         >
           <Image
             alt={product.imageAlt}
+            fetchPriority="high"
             fill
-            priority
+            loading="eager"
             sizes="(max-width: 64rem) 100vw, 55vw"
             src={product.image}
           />

@@ -138,8 +138,10 @@ export function CartView() {
           </div>
         </dl>
         <p>
-          Preço e estoque foram revalidados pelo servidor. Frete e pagamento
-          permanecem demonstrativos.
+          {process.env.NEXT_PUBLIC_STATIC_DEMO === "true"
+            ? "Preço e estoque foram revalidados localmente nesta versão estática."
+            : "Preço e estoque foram revalidados pelo servidor."}{" "}
+          Frete e pagamento permanecem demonstrativos.
         </p>
         <Link className="primary-action cart-checkout" href="/checkout">
           Continuar demonstração
